@@ -8,6 +8,10 @@ Backbone, Marionette, $, _){
             collection: contacts
       });
 
+      contactsListView.on("childview:contact:delete", function(childView, model){
+        contacts.remove(model);
+      });
+
       ContactManager.mainRegion.show(contactsListView);
     }
   }
