@@ -12,6 +12,11 @@ Backbone,Marionette,$,_){
     }
   };
 
+  ContactManager.on("contacts:list", function(){
+    ContactManager.navigate("contacts");
+    API.listContacts();
+  });
+
   ContactManager.addInitializer(function(){ 
     new ContactsApp.Router({
       controller: API
