@@ -13,7 +13,7 @@ Backbone, Marionette, $, _){
       });
 
       contactsListView.on("childview:contact:delete", function(childView, model){
-        contacts.remove(model);
+        model.destroy();
       });
 
       ContactManager.mainRegion.show(contactsListView);
