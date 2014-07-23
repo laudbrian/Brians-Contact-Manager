@@ -15,7 +15,7 @@ Backbone, Marionette, $, _){
   Entities.configureStorage(Entities.ContactCollection);
 
   var initializeContacts = function(){
-    var contacts = new Entities.ContactCollection([
+    contacts = new Entities.ContactCollection([
       { id: 1, firstName: "Alice", lastName: "Arten",
         phoneNumber: "555-0184" },
       { id: 2, firstName: "Bob", lastName: "Brigham",
@@ -49,7 +49,7 @@ Backbone, Marionette, $, _){
       return promise;
     },
 
-    getContactEntity: function(contactid){
+    getContactEntity: function(contactId){
       var contact = new Entities.Contact({id: contactId});
       var defer = $.Deferred();
       setTimeout(function(){
