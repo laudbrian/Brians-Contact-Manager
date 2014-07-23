@@ -15,7 +15,7 @@ Backbone, Marionette, $, _){
   Entities.configureStorage(Entities.ContactCollection);
 
   var initializeContacts = function(){
-    contacts = new Entities.ContactCollection([
+    var contacts = new Entities.ContactCollection([
       { id: 1, firstName: "Alice", lastName: "Arten",
         phoneNumber: "555-0184" },
       { id: 2, firstName: "Bob", lastName: "Brigham",
@@ -26,24 +26,43 @@ Backbone, Marionette, $, _){
     contacts.forEach(function(contact){
       contact.save();
     });
-    return contacts;
+    return contacts.models;
   };
 
   var API = {
     getContactEntities: function(){
       var contacts = new Entities.ContactCollection();
-      contacts.fetch();
-      if(contacts.length === 0){
+      var defer = $.Deferred();
+      contacts.fetch({
+        success: function(data){
+          defer.resolve(data);
+        }
+      });
+      var promise = defer.promise();
+      $.when(promise).done(function(contacts){
+        if(contacts.length === 0){
         // if we don't have any contacts yet, create some for convenience
-        return initializeContacts();
-      }
-      return contacts;
+          var models = initializeContacts();
+          contacts.reset(models);
+        }
+      });
+      return promise;
     },
 
     getContactEntity: function(contactid){
       var contact = new Entities.Contact({id: contactId});
-      contact.fetch();
-      return contact;
+      var defer = $.Deferred();
+      setTimeout(function(){
+        contact.fetch({
+          success: function(data){
+            defer.resolve(data);
+          },
+          error: function(data){
+            defer.resolve(undefined);
+          }
+        });
+      }, 2000);
+      return defer.promise();
     }
   };
 
