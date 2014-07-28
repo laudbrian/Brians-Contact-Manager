@@ -21,6 +21,18 @@
       <p>Here is static content in the web page. You'll notice that it gets replaced by our app as soon as we start it.</p>
     </div>
 
+    <script type="text/template" id="contact-list">
+      <thead>
+        <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </script>
+
     <script type="text/template" id="contact-list-item">
       <td><%- firstName %></td> 
       <td><%- lastName %></td>
@@ -36,20 +48,27 @@
       </td>
     </script>
 
-    <script type="text/template" id="contact-list">
-      <thead>
-        <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
+    <script type="text/template" id="missing-contact-view">
+      <div class="alert alert-error">This contact doesnt exist !</div>
     </script>
 
     <script type="text/template" id="contact-view">
       <h1><%- firstName %> <%- lastName %></h1>
+      <a href="#contacts/<%- id %>/edit" class="btn btn-small js-edit">
+        <i class="icon-pencil"></i>
+        Edit this contact
+      </a>
+      <p><strong>Phone number:</strong> <%- phoneNumber %></p>
+    </script>
+
+    <script type="text/template" id="loading-view">
+      <h1><%- title %></h1>
+      <p><%- message %></p>
+      <div id="spinner"></div>
+    </script>
+
+     <script type="text/template" id="contact-form">
+      <h1>Edit <%- firstName %> <%- lastName %></h1>
       <form>
         <div class="control-group">
           <label for="contact-firstName" class="control-label">
@@ -70,26 +89,7 @@
             type="text" value="<%- phoneNumber %>"/>
         </div>
         <button class="btn js-submit">Save</button>
-
-        <p><strong>Phone number:</strong> <%- phoneNumber %></p>
       </form>
-    </script>
-
-    <script type="text/template" id="contact-form">
-      <h1>Edit <%- firstName %> <%- lastName %></h1>
-      <p><strong>Phone number:</strong> <%- phoneNumber %></p>
-    </script>
-
-    <script type="text/template" id="missing-contact-view">
-      <div class="alert alert-error">This contact doesnt exist !</div>
-    </script>
-
-
-
-    <script type="text/template" id="loading-view">
-      <h1><%- title %></h1>
-      <p><%- message %></p>
-      <div id="spinner"></div>
     </script>
 
     <script src="./assets/js/vendor/jquery.js"></script>
@@ -99,10 +99,12 @@
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
     <script src="./assets/js/vendor/spin.js"></script>
     <script src="./assets/js/vendor/spin.jquery.js"></script>
+
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/apps/config/storage/localstorage.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
     <script src="./assets/js/common/views.js"></script>
+
     <script src="./assets/js/apps/contacts/contacts_app.js"></script>
     <script src="./assets/js/apps/contacts/list/list_view.js"></script>
     <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
@@ -115,6 +117,5 @@
     <script type="text/javascript">
         ContactManager.start();
     </script>
-
   </body>
 </html>
