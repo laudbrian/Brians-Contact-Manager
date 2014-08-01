@@ -22,11 +22,15 @@ Backbone, Marionette, $, _){
             asModal: true
           });
 
-          view.on("show", function(){
-            this.$el.dialog({
-              modal: true,
-              width: "auto"
-            });
+          view.on("form:submit", function(data){
+            if(model.save(data)){
+              childView.render();
+              ContactManager.dialogRegion.empty();
+              childView.flash("success");
+            }
+            else{
+              view.triggerMethod("form:data:invalid", model.validationError);
+            }
           });
 
           ContactManager.dialogRegion.show(view);
