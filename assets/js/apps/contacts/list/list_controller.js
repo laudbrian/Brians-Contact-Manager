@@ -16,6 +16,22 @@ Backbone, Marionette, $, _){
           ContactManager.trigger("contact:show", model.get("id"));
         });
 
+        contactsListView.on("childview:contact:edit", function(childView, model){
+          var view = new ContactManager.ContactsApp.Edit.Contact({
+            model: model,
+            asModal: true
+          });
+
+          view.on("show", function(){
+            this.$el.dialog({
+              modal: true,
+              width: "auto"
+            });
+          });
+
+          ContactManager.dialogRegion.show(view);
+        });
+
         contactsListView.on("childview:contact:delete", function(childView, model){
           model.destroy();
         });
