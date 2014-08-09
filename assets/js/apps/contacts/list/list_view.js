@@ -10,19 +10,26 @@ Backbone, Marionette, $, _){
     });
 
     List.Panel = Marionette.ItemView.extend({
-      template: "#contact-list-panel"
+      template: "#contact-list-panel",
+
+      triggers: {
+        "click button.js-new": "contact:new"
+      }
     });
 
     List.Contact = Marionette.ItemView.extend({
       tagName: "tr",
       template: "#contact-list-item",
 
+      triggers: {
+        "click td a.js-show": "contact:show",
+        "click td a.js-edit": "contact:edit",
+        "click button a.js-delete": "contact:delete"   
+      },
+
       // event handling code is here
       events: {
-        "click": "highlightName",
-        "click td a.js-show": "showClicked",
-        "click td a.js-edit": "deleteClicked",
-        "click button.js-delete": "deleteClicked"
+        "click": "highlightName"
       },
 
       flash: function(cssClass){
@@ -70,6 +77,19 @@ Backbone, Marionette, $, _){
       childView: List.Contact,
       childViewContainer: "tbody",
 
+      initialize: function(){
+        this.listenTo(this.collection, "reset", function(){
+          this.attachHtml = function(collectionView, childView, index){
+            collectionView.$el.append(childView.el);
+          }
+        });
+      },
+
+      onRenderCollection: function(){
+        this.attachHtml = function(collectionView, childView, index){
+          collectionView.$el.prepend(childView.el);
+        }
+      }
     });
 });
   

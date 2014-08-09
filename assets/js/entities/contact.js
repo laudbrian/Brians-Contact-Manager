@@ -3,6 +3,12 @@ Backbone, Marionette, $, _){
   Entities.Contact = Backbone.Model.extend({
     urlRoot: "contacts",
 
+    defaults: {
+      firstName: "",
+      lastName: "", 
+      phoneNumber: ""
+    },
+
     validate: function(attrs, options) {
       var errors = {}
       if (! attrs.firstName) {
