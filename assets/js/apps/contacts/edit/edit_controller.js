@@ -14,7 +14,8 @@ ContactManager,Backbone,Marionette,$,_){
         var view;
         if(contact !== undefined){
           view = new Edit.Contact({ 
-            model: contact
+            model: contact,
+            generateTitle: true
           });
 
           view.on("form:submit", function(data){

@@ -24,8 +24,7 @@ Backbone, Marionette, $, _){
           var newContact = new ContactManager.Entities.Contact();
 
           var view = new ContactManager.ContactsApp.New.Contact({
-            model: newContact,
-            asModal: true
+            model: newContact
           });
 
           view.on("form:submit", function(data){
@@ -38,7 +37,7 @@ Backbone, Marionette, $, _){
             }
             if(newContact.save(data)){
               contacts.add(newContact);
-              ContactManager.dialogRegion.empty();
+              view.trigger("dialog:close");
               contactsListView.children.findByModel(newContact).
                                                     flash("success");
             }
@@ -55,17 +54,15 @@ Backbone, Marionette, $, _){
           ContactManager.trigger("contact:show", args.model.get("id"));
         });
 
-        contactsListView.on("childview:contact:edit", function(childView, args){
-          var model = args.model;
+        contactsListView.on("childview:contact:edit", function(childView, model){
           var view = new ContactManager.ContactsApp.Edit.Contact({
-            model: model,
-            asModal: true
+            model: model
           });
 
           view.on("form:submit", function(data){
             if(model.save(data)){
               childView.render();
-              ContactManager.dialogRegion.empty();
+              view.trigger("dialog:close");
               childView.flash("success");
             }
             else{
