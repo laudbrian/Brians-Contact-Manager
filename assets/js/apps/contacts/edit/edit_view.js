@@ -10,6 +10,8 @@ ContactManager, Backbone, Marionette, $, _){
         var $title = $("<h1>", { text: this.title });
         this.$el.prepend($title);
       }
+
+      this.$(".js-submit").text("Update contact");
     }
   });
 });
