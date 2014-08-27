@@ -20,10 +20,18 @@ Backbone, Marionette, $, _){
         "submit #filter-form": "filterContacts"
       },
 
+      ui: {
+        criterion: "input.js-filter-criterion"
+      },
+
       filterContacts: function(e) {
         e.preventDefault();
         var criterion = this.$(".js-filter-criterion").val();
         this.trigger("contacts:filter", criterion);
+      },
+
+      onSetFilterCreation: function(criterion){
+        this.ui.criterion.val(criterion);
       }
     });
 
